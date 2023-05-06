@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
-encoding//src/partido/dao/AccesoPartido.java=ISO-8859-1
-encoding//src/partido/modelo/Equipo.java=ISO-8859-1
-encoding//src/partido/modelo/Partido.java=ISO-8859-1
+encoding//src/main/doa/AccesoPartido.java=ISO-8859-1
+encoding//src/main/modelo/Equipo.java=ISO-8859-1
+encoding//src/main/modelo/Partido.java=ISO-8859-1
 encoding/<project>=ISO-8859-1

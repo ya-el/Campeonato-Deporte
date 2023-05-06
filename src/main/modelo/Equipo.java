@@ -1,4 +1,4 @@
-package partido.modelo;
+package main.modelo;
 
 public class Equipo {
 	//Hecho por Alvaro Delicado

@@ -1,4 +1,4 @@
-package partido.config;
+package main.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

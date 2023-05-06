@@ -1,4 +1,4 @@
-package partido.modelo;
+package main.modelo;
 
 /**
  * @author YASSINE EL ATTAR

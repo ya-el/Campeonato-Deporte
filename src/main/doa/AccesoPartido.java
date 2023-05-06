@@ -1,4 +1,4 @@
-package partido.dao;
+package main.doa;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,9 +14,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import partido.config.ConfigBD;
-import partido.modelo.Equipo;
-import partido.modelo.Partido;
+import main.config.ConfigBD;
+import main.modelo.Equipo;
+import main.modelo.Partido;
 
 /**
  * @author YASSINE EL ATTAR
