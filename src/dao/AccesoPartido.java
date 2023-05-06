@@ -1,5 +1,12 @@
 package dao;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import config.ConfigBD;
+import modelo.Equipo;
 import modelo.Partido;
 
 /**
@@ -268,11 +276,91 @@ public class AccesoPartido {
 		return  partidos;
 	}
 	
-	public static boolean ImportarPartidos() {
+	public static boolean ImportarPartidos(String path) {
+		BufferedReader flujoEntrada = null;
+		//List<Partido> partidos = new ArrayList<Partido>();
+		try {
+			File fichero = new File(path);
+			flujoEntrada = new BufferedReader(new FileReader(fichero));
+
+			String linea = flujoEntrada.readLine();
+			while (linea != null) {
+				String[] datos = linea.split(";");
+				
+				int codigoEquipoLocal = Integer.parseInt(datos[0]);
+				int codigoEquipoVisitante = Integer.parseInt(datos[1]);
+				int añoTemporada = Integer.parseInt(datos[2]);
+				String fecha = datos[3];
+				int puntuacionLocal = Integer.parseInt(datos[5]);
+				int puntuacionVisitante = Integer.parseInt(datos[5]);
+
+				Partido partido = new Partido(
+						codigoEquipoLocal
+						,codigoEquipoVisitante
+						,añoTemporada
+						,fecha
+						,puntuacionLocal
+						,puntuacionVisitante
+					);
+				
+				//partidos.add(partido);
+				InsertarPartido(partido);
+				linea = flujoEntrada.readLine();
+
+			}
+			/*
+			for(int i = 0; i < partidos.size(); i++) {
+				InsertarPartido(partidos.get(i));
+			}
+			*/
+		} catch (FileNotFoundException fnfe) {
+			System.out.println("Error al abrir el fichero: " + fnfe.getMessage());
+			fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			System.out.println("Error al leer del fichero: " + ioe.getMessage());
+			ioe.printStackTrace();
+		} catch (NumberFormatException nfe) {
+			System.out.println("Error al convertir de cadena a numero: " + nfe.getMessage());
+			nfe.printStackTrace();
+		} finally {
+			try {
+				if (flujoEntrada != null) {
+					flujoEntrada.close();
+				}
+			} catch (IOException ioe) {
+				System.out.println("Error al cerrar el fichero: " + ioe.getMessage());
+				ioe.printStackTrace();
+			}
+		}
 		return false;
 	}
 	
-	public static boolean ExportarPartidos() {
+	public static boolean ExportarPartidos(String path) {
+		BufferedWriter flujoSalida = null;
+		List<Partido> partidos = new ArrayList<Partido>();
+		try {
+			FileWriter escritor = new FileWriter(path, false);
+			flujoSalida = new BufferedWriter(new FileWriter(path, false));
+			for (int i = 0; i < partidos.size(); i++) {
+
+				flujoSalida.write(partidos.get(i).toStringWithSeparators());
+				flujoSalida.newLine();
+			}
+
+		} catch (IOException ioe) {
+			System.out.println("Error al escribir en el fichero: " + ioe.getMessage());
+			ioe.printStackTrace();
+		} finally {
+			try {
+				if (flujoSalida != null) {
+					flujoSalida.close();
+					return true;
+				}
+			} catch (IOException ioe) {
+				System.out.println("Error al cerrar el fichero: " + ioe.getMessage());
+				ioe.printStackTrace();
+			}
+		}
 		return false;
 	}
 

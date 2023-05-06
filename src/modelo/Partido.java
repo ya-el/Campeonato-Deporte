@@ -6,6 +6,8 @@ package modelo;
  */
 public class Partido {
 	
+	private static final String SEPARADOR = ";";
+	
 	private int codigoEquipoLocal;
 	private int codigoEquipoVisitante;
 	private int añoTemporada;
@@ -26,7 +28,16 @@ public class Partido {
 		this.puntuacionVisitante = puntuacionVisitante;
 	}
 	
-	
+	public Partido(String linea) {
+		super();
+		String[] datos = linea.split(SEPARADOR);
+		this.codigoEquipoLocal = Integer.parseInt(datos[0]);
+		this.codigoEquipoVisitante = Integer.parseInt(datos[1]);
+		this.añoTemporada = Integer.parseInt(datos[2]);
+		this.fecha = datos[3];
+		this.puntuacionLocal = Integer.parseInt(datos[5]);
+		this.puntuacionVisitante = Integer.parseInt(datos[5]);
+	}
 	
 	public Partido(int codigoEquipoLocal, int codigoEquipoVisitante, int añoTemporada) {
 		super();
@@ -35,7 +46,10 @@ public class Partido {
 		this.añoTemporada = añoTemporada;
 	}
 
-
+	public String toStringWithSeparators() {
+		return codigoEquipoLocal + SEPARADOR + codigoEquipoVisitante + SEPARADOR + añoTemporada + SEPARADOR + fecha
+				+ SEPARADOR + puntuacionLocal + SEPARADOR + puntuacionVisitante;
+	}
 
 	@Override
 	public String toString() {
