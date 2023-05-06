@@ -4,7 +4,7 @@ package partido;
  */
 
 /**
- * @author Y4ss7
+ * @author YASSINE EL ATTAR
  *
  */
 public class Main {
