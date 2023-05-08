@@ -1,27 +1,33 @@
 package main.modelo;
 
+import main.dao.AccesoEquipo;
+import main.dao.AccesoJugador;
+
 /**
- * @author YASSINE EL ATTAR
+ * @author YASSINE EL ATTAR lunes
  *
  */
 public class Partido {
 	
 	private static final String SEPARADOR = ";";
 	
-	private int codigoEquipoLocal;
-	private int codigoEquipoVisitante;
+	private Equipo equipoLocal;
+	private Equipo equipoVisitante;
 	private int añoTemporada;
 	private String fecha;
 	private int puntuacionLocal;
 	private int puntuacionVisitante;
-	private Equipo equipo;
+
+	private int codigoEquipoLocal;
+
+	private int codigoEquipoVisitante;
 
 
-	public Partido(int codigoEquipoLocal, int codigoEquipoVisitante, int añoTemporada, String fecha, int puntuacionLocal,
+	public Partido(Equipo equipoLocal,Equipo equipoVisitante, int añoTemporada, String fecha, int puntuacionLocal,
 			int puntuacionVisitante) {
 		super();
-		this.codigoEquipoLocal = codigoEquipoLocal;
-		this.codigoEquipoVisitante = codigoEquipoVisitante;
+		this.equipoLocal = equipoLocal;
+		this.equipoVisitante = equipoVisitante;
 		this.añoTemporada = añoTemporada;
 		this.fecha = fecha;
 		this.puntuacionLocal = puntuacionLocal;
@@ -31,8 +37,10 @@ public class Partido {
 	public Partido(String linea) {
 		super();
 		String[] datos = linea.split(SEPARADOR);
-		this.codigoEquipoLocal = Integer.parseInt(datos[0]);
-		this.codigoEquipoVisitante = Integer.parseInt(datos[1]);
+		int codigoEquipoLocal = Integer.parseInt(datos[0]);
+		this.equipoLocal =  AccesoEquipo.consultar(codigoEquipoLocal);
+		int codigoEquipoVisitante = Integer.parseInt(datos[1]);
+		this.equipoVisitante =  AccesoEquipo.consultar(codigoEquipoLocal);
 		this.añoTemporada = Integer.parseInt(datos[2]);
 		this.fecha = datos[3];
 		this.puntuacionLocal = Integer.parseInt(datos[5]);
@@ -55,18 +63,18 @@ public class Partido {
 	public String toString() {
 		return "Partido [codigoEquipoLocal=" + codigoEquipoLocal + ", codigoEquipoVisitante=" + codigoEquipoVisitante
 				+ ", añoTemporada=" + añoTemporada + ", fecha=" + fecha + ", puntuacionLocal=" + puntuacionLocal
-				+ ", puntuacionVisitante=" + puntuacionVisitante + ", equipo=" + equipo + "]";
+				+ ", puntuacionVisitante=" + puntuacionVisitante + "]";
 	}
 
 
-	public int getCodigoEquipoLocal() {
-		return codigoEquipoLocal;
+	public Equipo getEquipoLocal() {
+		return equipoLocal;
 		//return equipo.getCodigo();
 	}
 
 
-	public int getCodigoEquipoVisitante() {
-		return codigoEquipoVisitante;
+	public Equipo getEquipoVisitante() {
+		return equipoVisitante;
 		//return equipo.getCodigo();
 	}
 
@@ -111,24 +119,8 @@ public class Partido {
 	}
 
 
-	public Equipo getEquipo() {
-		return equipo;
-	}
 
-
-	public void setEquipo(Equipo equipo) {
-		this.equipo = equipo;
-	}
-
-
-	public void setCodigoEquipoLocal(int codigoEquipoLocal) {
-		this.codigoEquipoLocal = codigoEquipoLocal;
-	}
-
-
-	public void setCodigoEquipoVisitante(int codigoEquipoVisitante) {
-		this.codigoEquipoVisitante = codigoEquipoVisitante;
-	}
+	
 
 
 	public static void main(String[] args) {

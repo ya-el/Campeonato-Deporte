@@ -36,11 +36,11 @@ public class Equipo {
 		this.nombre = nombre;
 	}
 
-	public int getAnioFundacion() {
+	public int getAñoFundacion() {
 		return añoFundacion;
 	}
 
-	public void setAnioFundacion(int anioFundacion) {
+	public void setAñoFundacion(int anioFundacion) {
 		this.añoFundacion = anioFundacion;
 	}
 
