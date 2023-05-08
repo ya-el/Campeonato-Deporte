@@ -1,7 +1,6 @@
 package main.modelo;
 
 import main.dao.AccesoEquipo;
-import main.dao.AccesoJugador;
 
 /**
  * @author YASSINE EL ATTAR lunes
