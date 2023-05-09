@@ -146,7 +146,7 @@ public class AccesoPartido {
 	}
 
 	//para borrar un partido usamos un objeto partido con solo las claves primarias
-	public static boolean eliminarPartido(Partido partido) {
+	public static boolean eliminarPartido(int codigoEquipoLocalEliminar, int codigoEquipoVisitanteEliminar, int añoTemporadaEliminar) {
 		Connection conexion = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -170,9 +170,9 @@ public class AccesoPartido {
 					
 			System.out.println(sentenciaInsertar);
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaInsertar);
-			sentencia.setInt(1, partido.getEquipoLocal().getCodigo());
-			sentencia.setInt(2, partido.getEquipoVisitante().getCodigo());
-			sentencia.setDouble(3, partido.getAñoTemporada());
+			sentencia.setInt(1, codigoEquipoLocalEliminar);
+			sentencia.setInt(2, codigoEquipoVisitanteEliminar);
+			sentencia.setDouble(3, añoTemporadaEliminar);
 			
 			int filasInsertadas = sentencia.executeUpdate();
 			if (filasInsertadas == 0) {
@@ -231,10 +231,13 @@ public class AccesoPartido {
 					+ "p.fecha, "
 					+ "p.puntuacion_local, "
 					+ "p.puntuacion_visitante "
-					+ "FROM partido p join equipo el join equipo ev"
-					+ "WHERE codigo_equipo_local = ?, "
-					+ "and codigo_equipo_visitante = ?, "
-					+ "and año_temporada = ?"
+					+ "FROM partido p join equipo el "
+					+ "on p.codigoLocal = el.codigoLocal"
+					+ "join equipo ev"
+					+ "on p.codigoVisitante = ev.codigoVisitante"
+					+ "WHERE p.codigoLocal = ?, "
+					+ "and p.codigoVisitante = ?, "
+					+ "and p.año_temporada = ?"
 					+ "ORDER BY fecha";
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaConsultar);
 			sentencia.setInt(1, partidoEntrada.getEquipoLocal().getCodigo());
@@ -311,7 +314,13 @@ public class AccesoPartido {
 					+ "p.fecha, "
 					+ "p.puntuacion_local, "
 					+ "p.puntuacion_visitante "
-					+ "FROM partido p join equipo el join equipo ev"
+					+ "FROM partido p join equipo el "
+					+ "on p.codigoLocal = el.codigoLocal"
+					+ "join equipo ev"
+					+ "on p.codigoVisitante = ev.codigoVisitante"
+					+ "WHERE p.codigoLocal = ?, "
+					+ "and p.codigoVisitante = ?, "
+					+ "and p.año_temporada = ?"
 					+ "ORDER BY fecha";
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaConsultar);
 			ResultSet resultados = sentencia.executeQuery(sentenciaConsultar);
@@ -429,6 +438,48 @@ public class AccesoPartido {
 			}
 		}
 		return false;
+	}
+	
+	public static boolean rollback() {
+		Connection conexion = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conexion = ConfigBD.abrirConexion();
+			System.out.println("Conectado");
+			
+			String sentenciaRollback = "ROLLBACK;";
+					
+			System.out.println(sentenciaRollback);
+			PreparedStatement sentencia = conexion.prepareStatement(sentenciaRollback);
+			
+			int filasInsertadas = sentencia.executeUpdate();
+			if (filasInsertadas == 0) {
+				System.out.println("Error.");
+				return false;
+			} else {
+				System.out.println("RollBack exitoso");
+				return true;
+			}
+		}
+
+		catch (ClassNotFoundException cnfe) {
+			System.out.println("Error al cargar el conector de SQLite: " + cnfe.getMessage());
+			cnfe.printStackTrace();
+		} catch (SQLException sqle) {
+			System.out.println("Error de SQL: " + sqle.getMessage());
+			sqle.printStackTrace();
+		} finally {
+			try {
+				if (conexion != null) {
+					conexion.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("Error al cerrar la base de datos: " + sqle.getMessage());
+				sqle.printStackTrace();
+			}
+		}
+		return false;
+		
 	}
 
 	public static void main(String[] args) {

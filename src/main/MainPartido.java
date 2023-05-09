@@ -1,3 +1,4 @@
+
 package main;
 /**
  * 
@@ -43,13 +44,9 @@ public class MainPartido {
 				break;
 
 			case 1:
-				String nombre = Teclado.leerCadena("Introduce el nombre del Partido:");
-				String fechaNacimiento = Teclado.leerCadena("Introduce fecha de nacimiento del Partido:");
-				String nacionalidad = Teclado.leerCadena("Introduce la nacionalidad del Partido:");
-				String posicion = Teclado.leerCadena("Introduce la posicion del Partido:");
 				
-				Partido Partido = new Partido(nombre, fechaNacimiento, nacionalidad, posicion);
-				boolean insertado = AccesoPartido.insertarPartido(Partido);
+				Partido partidoInsertar = null;
+				boolean insertado = AccesoPartido.insertarPartido(partidoInsertar);
 				if(insertado) {
 					System.out.println("Se ha insertado un Partido en la base de datos.");
 				}else {
@@ -58,14 +55,9 @@ public class MainPartido {
 				break;
 				
 			case 2:
-				int codigo = Teclado.leerEntero("Codigo del Partido a actualizar:");
-				nombre = Teclado.leerCadena("Introduce el nombre del Partido:");
-				fechaNacimiento = Teclado.leerCadena("Introduce fecha de nacimiento del Partido:");
-				nacionalidad = Teclado.leerCadena("Introduce la nacionalidad del Partido:");
-				posicion = Teclado.leerCadena("Introduce la posicion del Partido:");
 				
-				Partido Partido2 = new Partido(codigo, nombre, fechaNacimiento, nacionalidad, posicion);
-				boolean actualizado = AccesoPartido.actualizarPartido(Partido2);
+				Partido partidoActualizar = null;
+				boolean actualizado = AccesoPartido.actualizarPartido(partidoActualizar);
 				if(actualizado) {
 					System.out.println("Se ha actualizado un Partido en la base de datos.");
 				}else {
@@ -74,9 +66,12 @@ public class MainPartido {
 				break;
 				
 			case 3:
-				codigo = Teclado.leerEntero("Codigo del Partido a eliminar:");
-				
-				boolean eliminado = AccesoPartido.eliminarPartido(codigo);
+				int codigoEquipoLocalEliminar = Teclado.leerEntero("Codigo equipo local a eliminar: ");
+				int codigoEquipoVisitanteEliminar = Teclado.leerEntero("Codigo equipo visitante a eliminar: ");
+				int añoTemporadaEliminar = Teclado.leerEntero("Año Temporada: ");
+
+
+				boolean eliminado = AccesoPartido.eliminarPartido(codigoEquipoLocalEliminar, codigoEquipoVisitanteEliminar, añoTemporadaEliminar);
 				if(eliminado) {
 					System.out.println("Se ha eliminado un Partido en la base de datos.");
 				}else {
@@ -85,8 +80,8 @@ public class MainPartido {
 				break;
 				
 			case 4:
-				codigo = Teclado.leerEntero("Codigo del Partido a consultar:");
-				Partido Partido3 = AccesoPartido.consultarPartido(codigo);
+				Partido partidoConultar = null;
+				Partido Partido3 = AccesoPartido.consultarPartido(partidoConultar);
 				
 				if(Partido3 == null) {
 					System.out.println("No existe un Partido con ese c�digo en la base de datos.");
@@ -126,7 +121,7 @@ public class MainPartido {
 				break;
 				
 			default:
-				System.out.println("La opci�n debe estar comprendida entre 0 y 7.");
+				System.out.println("La opcion debe estar comprendida entre 0 y 7.");
 			
 			}
 		} while (opcion != 0);

@@ -17,10 +17,6 @@ public class Partido {
 	private int puntuacionLocal;
 	private int puntuacionVisitante;
 
-	private int codigoEquipoLocal;
-
-	private int codigoEquipoVisitante;
-
 
 	public Partido(Equipo equipoLocal,Equipo equipoVisitante, int añoTemporada, String fecha, int puntuacionLocal,
 			int puntuacionVisitante) {
@@ -46,21 +42,14 @@ public class Partido {
 		this.puntuacionVisitante = Integer.parseInt(datos[5]);
 	}
 	
-	public Partido(int codigoEquipoLocal, int codigoEquipoVisitante, int añoTemporada) {
-		super();
-		this.codigoEquipoLocal = codigoEquipoLocal;
-		this.codigoEquipoVisitante = codigoEquipoVisitante;
-		this.añoTemporada = añoTemporada;
-	}
-
 	public String toStringWithSeparators() {
-		return codigoEquipoLocal + SEPARADOR + codigoEquipoVisitante + SEPARADOR + añoTemporada + SEPARADOR + fecha
+		return equipoLocal.getCodigo() + SEPARADOR + equipoVisitante.getCodigo() + SEPARADOR + añoTemporada + SEPARADOR + fecha
 				+ SEPARADOR + puntuacionLocal + SEPARADOR + puntuacionVisitante;
 	}
 
 	@Override
 	public String toString() {
-		return "Partido [codigoEquipoLocal=" + codigoEquipoLocal + ", codigoEquipoVisitante=" + codigoEquipoVisitante
+		return "Partido [codigoEquipoLocal=" + equipoLocal.getCodigo() + ", codigoEquipoVisitante=" + equipoVisitante.getCodigo()
 				+ ", añoTemporada=" + añoTemporada + ", fecha=" + fecha + ", puntuacionLocal=" + puntuacionLocal
 				+ ", puntuacionVisitante=" + puntuacionVisitante + "]";
 	}
