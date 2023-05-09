@@ -3,7 +3,7 @@ package main.modelo;
 import main.dao.AccesoEquipo;
 
 /**
- * @author YASSINE EL ATTAR lunes
+ * @author YASSINE EL ATTAR
  *
  */
 public class Partido {

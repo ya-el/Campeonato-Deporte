@@ -1,12 +1,12 @@
 package main.modelo;
 
-
-
-/*
- * Beni Burdet DAM 1ºA
+/**
+ * @author Beni Burdet DAM 1A
  */
 
 public class Jugador {
+
+	private static final String SEPARADOR = ";";
 
 	private int codigo;
 	private String nombre;
@@ -75,6 +75,11 @@ public class Jugador {
 	public String toString() {
 		return "\nJugador [codigo=" + codigo + ", nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento
 				+ ", nacionalidad=" + nacionalidad + ", posicion=" + posicion + "]";
+	}
+
+	public String toStringWithSeparators() {
+		return this.codigo + SEPARADOR + this.nombre + SEPARADOR + this.fechaNacimiento + SEPARADOR + this.nacionalidad
+				+ SEPARADOR + this.posicion;
 	}
 
 }

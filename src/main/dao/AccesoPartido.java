@@ -26,7 +26,7 @@ public class AccesoPartido {
 
 	//insertar un partido con una sentencia insert 
 	//usamos el objeto partido para obtener los valores de un partido
-	public static boolean InsertarPartido(Partido partido) {
+	public static boolean insertarPartido(Partido partido) {
 		Connection conexion = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -78,7 +78,7 @@ public class AccesoPartido {
 	//actualizar un partido usando un objeto
 	//el usuario proporciona un partido como objeto
 	//proporciona el SET y las claves primarias en un solo objeto
-	public static boolean ActualizarPartido(Partido partido) {
+	public static boolean actualizarPartido(Partido partido) {
 		Connection conexion = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -146,7 +146,7 @@ public class AccesoPartido {
 	}
 
 	//para borrar un partido usamos un objeto partido con solo las claves primarias
-	public static boolean EliminarPartido(Partido partido) {
+	public static boolean eliminarPartido(Partido partido) {
 		Connection conexion = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -204,7 +204,7 @@ public class AccesoPartido {
 	}
 	
 	//una consulta 
-	public static Partido ConsultarPartido(Partido partidoEntrada) {
+	public static Partido consultarPartido(Partido partidoEntrada) {
 		Partido partido = null;
 		Equipo equipoLocal = null;
 		Equipo equipoVisitante = null;
@@ -284,7 +284,7 @@ public class AccesoPartido {
 		return partido;
 	}
 
-	public static List<Partido> ConsultarTodosPartidos() {
+	public static List<Partido> consultarTodosPartidos() {
 		List<Partido> partidos = new ArrayList<Partido>();
 		Equipo equipoLocal = null;
 		Equipo equipoVisitante = null;
@@ -359,7 +359,7 @@ public class AccesoPartido {
 		return  partidos;
 	}
 	
-	public static boolean ImportarPartidos(String path) {
+	public static boolean importarPartidos(String path) {
 		BufferedReader flujoEntrada = null;
 		//List<Partido> partidos = new ArrayList<Partido>();
 		try {
@@ -371,7 +371,7 @@ public class AccesoPartido {
 				
 				Partido partido = new Partido(linea);
 				
-				InsertarPartido(partido);
+				insertarPartido(partido);
 				linea = flujoEntrada.readLine();
 
 			}
@@ -402,7 +402,7 @@ public class AccesoPartido {
 		return false;
 	}
 	
-	public static boolean ExportarPartidos(String path) {
+	public static boolean exportarPartidos(String path) {
 		BufferedWriter flujoSalida = null;
 		List<Partido> partidos = new ArrayList<Partido>();
 		try {
@@ -433,7 +433,7 @@ public class AccesoPartido {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
 	}
+
 
 }
