@@ -10,6 +10,10 @@ public class Equipo {
 	private String lugarSede;
 	private String estadio;
 	private int sociosAficionados;
+	
+	public Equipo(int codigo) {
+		this.codigo = codigo;		
+	}
 
 	public Equipo(int codigo, String nombre, int añoFundacion, String lugarSede, String estadio, int sociosAficionados) {
 		this.codigo = codigo;

@@ -8,6 +8,7 @@ import java.util.List;
 
 import entrada.Teclado;
 import main.dao.AccesoPartido;
+import main.modelo.Equipo;
 import main.modelo.Partido;
 
 /**
@@ -20,22 +21,24 @@ public class MainPartido {
 	 * @param args
 	 */
 	public static int menuOpciones() {
-		System.out.println("\n(0) Salir del programa.");
+		System.out.println("(0) Salir del programa.");
 		System.out.println("(1) Insertar un partido en la base de datos.");
-		System.out.println("(2) Actualizar un partido, por c�digo, de la base de datos.");
-		System.out.println("(3) Eliminar un partido, por c�digo, de la base de datos.");
-		System.out.println("(4) Consultar un partido, por c�digo, de la base de datos.");
+		System.out.println("(2) Actualizar un partido, por codigo, de la base de datos.");
+		System.out.println("(3) Eliminar un partido, por codigo, de la base de datos.");
+		System.out.println("(4) Consultar un partido, por codigo, de la base de datos.");
 		System.out.println("(5) Consultar todos los partidos de la base de datos ordenados por posicion.");
 		System.out.println("(6) Exportar los partidos de la base de datos al fichero de texto.");
 		System.out.println("(7) Importar los partidos del fichero a la base de datos.");
 
-		int opcion = Teclado.leerEntero("¿Opci�n (0-7)?");
+		int opcion = Teclado.leerEntero("¿Opcion (0-7)?");
 		return opcion;
 	}
 
 	public static void main(String[] args) {
 		int opcion = -1;
-
+		Equipo equipoLocal ;
+		Equipo equipoVisitante;
+		
 		do {
 
 			opcion = menuOpciones();
@@ -44,8 +47,11 @@ public class MainPartido {
 				break;
 
 			case 1:
-				
-				Partido partidoInsertar = null;
+				int codigoEquipoLocal = Teclado.leerEntero("Codigo de equipo local");
+				int codigoEquipoVisitante = Teclado.leerEntero("Codigo de equipo visitante") ;
+				equipoLocal = new Equipo(codigoEquipoLocal);
+				equipoVisitante = new Equipo(codigoEquipoVisitante);
+				Partido partidoInsertar = new Partido(equipoLocal, equipoVisitante, opcion, null, opcion, opcion);
 				boolean insertado = AccesoPartido.insertarPartido(partidoInsertar);
 				if(insertado) {
 					System.out.println("Se ha insertado un Partido en la base de datos.");
@@ -61,7 +67,7 @@ public class MainPartido {
 				if(actualizado) {
 					System.out.println("Se ha actualizado un Partido en la base de datos.");
 				}else {
-					System.out.println("No existe un Partido con ese c�digo en la base de datos.");
+					System.out.println("No existe un Partido con ese codigo en la base de datos.");
 				}
 				break;
 				
@@ -69,13 +75,14 @@ public class MainPartido {
 				int codigoEquipoLocalEliminar = Teclado.leerEntero("Codigo equipo local a eliminar: ");
 				int codigoEquipoVisitanteEliminar = Teclado.leerEntero("Codigo equipo visitante a eliminar: ");
 				int añoTemporadaEliminar = Teclado.leerEntero("Año Temporada: ");
+				Equipo equipoLocal = new Equipo(codigoEquipoLocal);
+				Equipo equipoVisitante = new Equipo(codigoEquipoVisitante);
 
-
-				boolean eliminado = AccesoPartido.eliminarPartido(codigoEquipoLocalEliminar, codigoEquipoVisitanteEliminar, añoTemporadaEliminar);
+				boolean eliminado = AccesoPartido.eliminarPartido();
 				if(eliminado) {
 					System.out.println("Se ha eliminado un Partido en la base de datos.");
 				}else {
-					System.out.println("No existe un Partido con ese c�digo en la base de datos.");
+					System.out.println("No existe un Partido con ese codigo en la base de datos.");
 				}
 				break;
 				
@@ -84,7 +91,7 @@ public class MainPartido {
 				Partido Partido3 = AccesoPartido.consultarPartido(partidoConultar);
 				
 				if(Partido3 == null) {
-					System.out.println("No existe un Partido con ese c�digo en la base de datos.");
+					System.out.println("No existe un Partido con ese codigo en la base de datos.");
 				}else {
 					System.out.println(Partido3);
 				}
@@ -125,6 +132,7 @@ public class MainPartido {
 			
 			}
 		} while (opcion != 0);
+		System.out.println("El programa ha finalizado con exito!");
 	}
 
 }

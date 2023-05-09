@@ -84,19 +84,7 @@ public class AccesoPartido {
 			Class.forName("org.sqlite.JDBC");
 			conexion = ConfigBD.abrirConexion();
 			System.out.println("Conectado");
-			/*
-			String sentenciaInsertar = 
-					"UPDATE partido "
-					+ "SET fecha = " + partido.getFecha() + ", "
-					+ "SET puntuacion_local = "+ partido.getPuntuacionLocal() +", "
-					+ "SET puntuacion_visitante = "+ partido.getPuntuacionVisitante() + ", "
-					+ "WHERE codigo_equipo_local = "+  partido.getCodigoEquipoLocal() +", "
-					+ "and codigo_equipo_visitante = "+ partido.getCodigoEquipoVisitante() +", "
-					+ "and año_temporada = "+ partido.getAñoTemporada() + ",";
-			
-			System.out.println(sentenciaInsertar);
-			PreparedStatement sentencia = conexion.prepareStatement(sentenciaInsertar);
-			*/
+		
 			String sentenciaInsertar = 
 					"UPDATE partido "
 					+ "SET fecha = ? , "
@@ -146,22 +134,13 @@ public class AccesoPartido {
 	}
 
 	//para borrar un partido usamos un objeto partido con solo las claves primarias
-	public static boolean eliminarPartido(int codigoEquipoLocalEliminar, int codigoEquipoVisitanteEliminar, int añoTemporadaEliminar) {
+	public static boolean eliminarPartido(Partido partidoEliminar) {
 		Connection conexion = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conexion = ConfigBD.abrirConexion();
 			System.out.println("Conectado");
-			/*
-			String sentenciaInsertar = 
-					"DELETE FROM partido "
-					+ "WHERE codigo_equipo_local = "+  partido.getCodigoEquipoLocal() +", "
-					+ "and codigo_equipo_visitante = "+ partido.getCodigoEquipoVisitante() +", "
-					+ "and año_temporada = "+ partido.getAñoTemporada() + ",";
-					
-			System.out.println(sentenciaInsertar);
-			PreparedStatement sentencia = conexion.prepareStatement(sentenciaInsertar);
-			*/
+			
 			String sentenciaInsertar = 
 					"DELETE FROM partido "
 					+ "WHERE codigo_equipo_local = ?, "
@@ -170,9 +149,9 @@ public class AccesoPartido {
 					
 			System.out.println(sentenciaInsertar);
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaInsertar);
-			sentencia.setInt(1, codigoEquipoLocalEliminar);
-			sentencia.setInt(2, codigoEquipoVisitanteEliminar);
-			sentencia.setDouble(3, añoTemporadaEliminar);
+			sentencia.setInt(1, partidoEliminar.getEquipoLocal().getCodigo());
+			sentencia.setInt(2, partidoEliminar.getEquipoVisitante().getCodigo());
+			sentencia.setDouble(3, partidoEliminar.getAñoTemporada());
 			
 			int filasInsertadas = sentencia.executeUpdate();
 			if (filasInsertadas == 0) {
@@ -384,11 +363,7 @@ public class AccesoPartido {
 				linea = flujoEntrada.readLine();
 
 			}
-			/*
-			for(int i = 0; i < partidos.size(); i++) {
-				InsertarPartido(partidos.get(i));
-			}
-			*/
+			
 		} catch (FileNotFoundException fnfe) {
 			System.out.println("Error al abrir el fichero: " + fnfe.getMessage());
 			fnfe.printStackTrace();

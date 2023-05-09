@@ -29,6 +29,13 @@ public class Partido {
 		this.puntuacionVisitante = puntuacionVisitante;
 	}
 	
+	public Partido(Equipo equipoLocal,Equipo equipoVisitante, int añoTemporada) {
+		super();
+		this.equipoLocal = equipoLocal;
+		this.equipoVisitante = equipoVisitante;
+		this.añoTemporada = añoTemporada;
+	}
+	
 	public Partido(String linea) {
 		super();
 		String[] datos = linea.split(SEPARADOR);
