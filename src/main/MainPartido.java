@@ -36,8 +36,6 @@ public class MainPartido {
 
 	public static void main(String[] args) {
 		int opcion = -1;
-		Equipo equipoLocal ;
-		Equipo equipoVisitante;
 		
 		do {
 
@@ -47,12 +45,20 @@ public class MainPartido {
 				break;
 
 			case 1:
-				int codigoEquipoLocal = Teclado.leerEntero("Codigo de equipo local");
-				int codigoEquipoVisitante = Teclado.leerEntero("Codigo de equipo visitante") ;
-				equipoLocal = new Equipo(codigoEquipoLocal);
-				equipoVisitante = new Equipo(codigoEquipoVisitante);
-				Partido partidoInsertar = new Partido(equipoLocal, equipoVisitante, opcion, null, opcion, opcion);
+				
+				int codigoEquipoLocalInsertar = Teclado.leerEntero("Codigo de equipo local: ");
+				int codigoEquipoVisitanteInsertar = Teclado.leerEntero("Codigo de equipo visitante: ");
+				int añoTemporadaInsertar = Teclado.leerEntero("Año Temporada: ");
+				String fechaInsertar = Teclado.leerCadena("Fecha: ");
+				int puntuacionLocalInsertar = Teclado.leerEntero("puntos local: ");;
+				int puntuacionVisitanteInsertar = Teclado.leerEntero("puntos visitante: ");
+				
+				Equipo equipoLocalInsertar = new Equipo(codigoEquipoLocalInsertar);
+				Equipo equipoVisitanteInsertar = new Equipo(codigoEquipoVisitanteInsertar);
+				
+				Partido partidoInsertar = new Partido(equipoLocalInsertar, equipoVisitanteInsertar,añoTemporadaInsertar,fechaInsertar,puntuacionLocalInsertar,puntuacionVisitanteInsertar);
 				boolean insertado = AccesoPartido.insertarPartido(partidoInsertar);
+				
 				if(insertado) {
 					System.out.println("Se ha insertado un Partido en la base de datos.");
 				}else {
@@ -61,9 +67,20 @@ public class MainPartido {
 				break;
 				
 			case 2:
+				int codigoEquipoLocalActualizar = Teclado.leerEntero("Codigo de equipo local");
+				int codigoEquipoVisitanteActualizar = Teclado.leerEntero("Codigo de equipo visitante");
+				int añoTemporadaActualizar = Teclado.leerEntero("Año Temporada: ");
 				
-				Partido partidoActualizar = null;
+				String fechaActualizar = Teclado.leerCadena("Fecha: ");
+				int puntuacionLocalActualizar = Teclado.leerEntero("puntos local: ");;
+				int puntuacionVisitanteActualizar = Teclado.leerEntero("puntos visitante: ");
+				
+				Equipo equipoLocalActualizar = new Equipo(codigoEquipoLocalActualizar);
+				Equipo equipoVisitanteActualizar = new Equipo(codigoEquipoVisitanteActualizar);
+				
+				Partido partidoActualizar = new Partido(equipoLocalActualizar, equipoVisitanteActualizar, añoTemporadaActualizar, fechaActualizar, puntuacionLocalActualizar, puntuacionVisitanteActualizar);
 				boolean actualizado = AccesoPartido.actualizarPartido(partidoActualizar);
+				
 				if(actualizado) {
 					System.out.println("Se ha actualizado un Partido en la base de datos.");
 				}else {
@@ -72,13 +89,13 @@ public class MainPartido {
 				break;
 				
 			case 3:
-				int codigoEquipoLocalEliminar = Teclado.leerEntero("Codigo equipo local a eliminar: ");
-				int codigoEquipoVisitanteEliminar = Teclado.leerEntero("Codigo equipo visitante a eliminar: ");
+				int codigoEquipoLocalEliminar = Teclado.leerEntero("Codigo equipo local: ");
+				int codigoEquipoVisitanteEliminar = Teclado.leerEntero("Codigo equipo visitante: ");
 				int añoTemporadaEliminar = Teclado.leerEntero("Año Temporada: ");
-				Equipo equipoLocal = new Equipo(codigoEquipoLocal);
-				Equipo equipoVisitante = new Equipo(codigoEquipoVisitante);
-
-				boolean eliminado = AccesoPartido.eliminarPartido();
+				Equipo equipoLocalEliminar = new Equipo(codigoEquipoLocalEliminar);
+				Equipo equipoVisitanteEliminar = new Equipo(codigoEquipoVisitanteEliminar);
+				Partido partidoEliminar = new Partido(equipoLocalEliminar, equipoVisitanteEliminar, añoTemporadaEliminar);
+				boolean eliminado = AccesoPartido.eliminarPartido(partidoEliminar);
 				if(eliminado) {
 					System.out.println("Se ha eliminado un Partido en la base de datos.");
 				}else {
@@ -87,7 +104,14 @@ public class MainPartido {
 				break;
 				
 			case 4:
-				Partido partidoConultar = null;
+				
+				int codigoEquipoLocalConultar = Teclado.leerEntero("Codigo equipo local: ");
+				int codigoEquipoVisitanteConultar = Teclado.leerEntero("Codigo equipo visitante: ");
+				int añoTemporadaConultar = Teclado.leerEntero("Año Temporada: ");
+				Equipo equipoLocalConultar = new Equipo(codigoEquipoLocalConultar);
+				Equipo equipoVisitanteConultar = new Equipo(codigoEquipoVisitanteConultar);
+				
+				Partido partidoConultar = new Partido(equipoLocalConultar, equipoVisitanteConultar, añoTemporadaConultar);
 				Partido Partido3 = AccesoPartido.consultarPartido(partidoConultar);
 				
 				if(Partido3 == null) {
@@ -98,18 +122,18 @@ public class MainPartido {
 				break;
 				
 			case 5:
-				List<Partido> Partidoes = AccesoPartido.consultarTodosPartidos();
-				if(Partidoes == null) {
+				List<Partido> Partidos = AccesoPartido.consultarTodosPartidos();
+				if(Partidos == null) {
 					System.out.println("No hay Partidoes en la base de datos.");
 				}else {
-					System.out.println(Partidoes);
+					System.out.println(Partidos);
 				}
 				
 				break;
 				
 			case 6:
-				String path = Teclado.leerCadena("Direccion");
-				boolean escrito = AccesoPartido.exportarPartidos(path);
+				String pathExportar = Teclado.leerCadena("Direccion donde quiere guardar el archivo: ");
+				boolean escrito = AccesoPartido.exportarPartidos(pathExportar);
 				if(escrito) {
 					System.out.println("Se ha exportado la tabla al fichero.");
 				}else {
@@ -118,8 +142,9 @@ public class MainPartido {
 				break;
 				
 			case 7:
-				String pathImportar = Teclado.leerCadena("Direccion");
+				String pathImportar = Teclado.leerCadena("Direccion del archivo a importar: ");
 				boolean importados = AccesoPartido.importarPartidos(pathImportar);
+				
 				if(!importados) {
 					System.out.println("No se han importado Partidoes del fichero de texto.");
 				}else {

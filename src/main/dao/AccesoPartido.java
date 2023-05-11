@@ -35,7 +35,7 @@ public class AccesoPartido {
 			String sentenciaInsertar = "INSERT INTO partido (codigo_equipo_local, codigo_equipo_visitante, año_temporada, fecha, puntuacion_local, puntuacion_visitante) "
 					+ "VALUES (?,?,?,?,?,?)";
 
-			System.out.println(sentenciaInsertar);
+			
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaInsertar);
 			sentencia.setInt(1, partido.getEquipoLocal().getCodigo());
 			sentencia.setInt(2, partido.getEquipoVisitante().getCodigo());
@@ -44,7 +44,7 @@ public class AccesoPartido {
 			sentencia.setInt(5, partido.getPuntuacionLocal());
 			sentencia.setInt(6, partido.getPuntuacionVisitante());
 			
-			
+			System.out.println(sentenciaInsertar);
 			int filasInsertadas = sentencia.executeUpdate();
 			if (filasInsertadas == 0) {
 				System.out.println("Ya existe ese partido en la base de datos.");
@@ -94,7 +94,7 @@ public class AccesoPartido {
 					+ "and codigo_equipo_visitante = ?, "
 					+ "and año_temporada = ?,";
 			
-			System.out.println(sentenciaInsertar);
+			
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaInsertar);
 			sentencia.setInt(4, partido.getEquipoLocal().getCodigo());
 			sentencia.setInt(5, partido.getEquipoVisitante().getCodigo());
@@ -103,7 +103,7 @@ public class AccesoPartido {
 			sentencia.setInt(2, partido.getPuntuacionLocal());
 			sentencia.setInt(3, partido.getPuntuacionVisitante());
 			
-			
+			System.out.println(sentenciaInsertar);
 			int filasInsertadas = sentencia.executeUpdate();
 			if (filasInsertadas == 0) {
 				System.out.println("Error al actualizar");
@@ -147,11 +147,13 @@ public class AccesoPartido {
 					+ "and codigo_equipo_visitante = ?, "
 					+ "and año_temporada = ?,";
 					
-			System.out.println(sentenciaInsertar);
+			
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaInsertar);
 			sentencia.setInt(1, partidoEliminar.getEquipoLocal().getCodigo());
 			sentencia.setInt(2, partidoEliminar.getEquipoVisitante().getCodigo());
 			sentencia.setDouble(3, partidoEliminar.getAñoTemporada());
+			
+			System.out.println(sentenciaInsertar);
 			
 			int filasInsertadas = sentencia.executeUpdate();
 			if (filasInsertadas == 0) {
@@ -191,38 +193,37 @@ public class AccesoPartido {
 		try {
 			conexion = ConfigBD.abrirConexion();
 			String sentenciaConsultar = 
-					"SELECT "
-					+ "el.codigo as codigoLocal"
-					+ "el.nombre as nombreLocal"
-					+ "el.añoFundacion as añoFundacionLocal"
-					+ "el.lugarSede as lugarSedeLocal"
-					+ "el.estadio as estadioLocal"
-					+ "el.sociosAficionado as sociosAficionadosLocal "
-					
-					+ "ev.codigo as codigoVisitante"
-					+ "ev.nombre as nombreVisitante"
-					+ "ev.añoFundacion as añoFundacionVisitante"
-					+ "ev.lugarSede as lugarSedeVisitante"
-					+ "ev.estadio as estadioVisitante"
-					+ "ev.sociosAficionados as sociosAficionadosVisitante"
-					
-					+ "p.año_temporada, "
-					+ "p.fecha, "
-					+ "p.puntuacion_local, "
-					+ "p.puntuacion_visitante "
-					+ "FROM partido p join equipo el "
-					+ "on p.codigoLocal = el.codigoLocal"
-					+ "join equipo ev"
-					+ "on p.codigoVisitante = ev.codigoVisitante"
-					+ "WHERE p.codigoLocal = ?, "
-					+ "and p.codigoVisitante = ?, "
-					+ "and p.año_temporada = ?"
-					+ "ORDER BY fecha";
+					"SELECT  el.codigo as codigoLocal, \n"
+					+ "el.nombre as nombreLocal, \n"
+					+ "el.año_fundacion as añoFundacionLocal, \n"
+					+ "el.lugar_sede as lugarSedeLocal, \n"
+					+ "el.estadio as estadioLocal, \n"
+					+ "el.socios_aficionados as sociosAficionadosLocal,  \n"
+					+ "\n"
+					+ "ev.codigo as codigoVisitante, \n"
+					+ "ev.nombre as nombreVisitante, \n"
+					+ "ev.año_fundacion as añoFundacionVisitante, \n"
+					+ "ev.lugar_sede as lugarSedeVisitante, \n"
+					+ "ev.estadio as estadioVisitante, \n"
+					+ "ev.socios_aficionados as sociosAficionadosVisitante,  \n"
+					+ "p.año_temporada,  \n"
+					+ "p.fecha,  \n"
+					+ "p.puntuacion_local,  \n"
+					+ "p.puntuacion_visitante  \n"
+					+ "FROM partido p join equipo el  \n"
+					+ "on p.codigo_equipo_local = el.codigo \n"
+					+ "join equipo ev \n"
+					+ "on p.codigo_equipo_visitante = ev.codigo \n"
+					+ "WHERE p.codigo_equipo_local = ?   \n"
+					+ "and p.codigo_equipo_visitante = ? \n"
+					+ "and p.año_temporada = ?;";
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaConsultar);
 			sentencia.setInt(1, partidoEntrada.getEquipoLocal().getCodigo());
 			sentencia.setInt(2, partidoEntrada.getEquipoVisitante().getCodigo());
 			sentencia.setDouble(3, partidoEntrada.getAñoTemporada());
-			ResultSet resultados = sentencia.executeQuery(sentenciaConsultar);
+			ResultSet resultados = sentencia.executeQuery();
+			
+			System.out.println(sentenciaConsultar);
 			while (resultados.next()) {
 				
 				int codigoLocal = resultados.getInt("codigoLocal");
@@ -274,35 +275,32 @@ public class AccesoPartido {
 		Connection conexion = null;
 		try {
 			conexion = ConfigBD.abrirConexion();
-			String sentenciaConsultar = "SELECT "
-					+ "el.codigo as codigoLocal"
-					+ "el.nombre as nombreLocal"
-					+ "el.añoFundacion as añoFundacionLocal"
-					+ "el.lugarSede as lugarSedeLocal"
-					+ "el.estadio as estadioLocal"
-					+ "el.sociosAficionado as sociosAficionadosLocal "
-					
-					+ "ev.codigo as codigoVisitante"
-					+ "ev.nombre as nombreVisitante"
-					+ "ev.añoFundacion as añoFundacionVisitante"
-					+ "ev.lugarSede as lugarSedeVisitante"
-					+ "ev.estadio as estadioVisitante"
-					+ "ev.sociosAficionados as sociosAficionadosVisitante"
-					
-					+ "p.año_temporada, "
-					+ "p.fecha, "
-					+ "p.puntuacion_local, "
-					+ "p.puntuacion_visitante "
-					+ "FROM partido p join equipo el "
-					+ "on p.codigoLocal = el.codigoLocal"
-					+ "join equipo ev"
-					+ "on p.codigoVisitante = ev.codigoVisitante"
-					+ "WHERE p.codigoLocal = ?, "
-					+ "and p.codigoVisitante = ?, "
-					+ "and p.año_temporada = ?"
-					+ "ORDER BY fecha";
+			String sentenciaConsultar =  "SELECT  el.codigo as codigoLocal, \n"
+					 + " el.nombre as nombreLocal, \n"
+					 + " el.año_fundacion as añoFundacionLocal, \n"
+					 + " el.lugar_sede as lugarSedeLocal, \n"
+					 + " el.estadio as estadioLocal, \n"
+					 + " el.socios_aficionados as sociosAficionadosLocal,  \n"
+					 + " \n"
+					 + " ev.codigo as codigoVisitante, \n"
+					 + " ev.nombre as nombreVisitante, \n"
+					 + " ev.año_fundacion as añoFundacionVisitante, \n"
+					 + " ev.lugar_sede as lugarSedeVisitante, \n"
+					 + " ev.estadio as estadioVisitante, \n"
+					 + " ev.socios_aficionados as sociosAficionadosVisitante,  \n"
+					 + " p.año_temporada,  \n"
+					 + " p.fecha,  \n"
+					 + " p.puntuacion_local,  \n"
+					 + " p.puntuacion_visitante  \n"
+					 + " FROM partido p join equipo el  \n"
+					 + " on p.codigo_equipo_local = el.codigo \n"
+					 + " join equipo ev \n"
+					 + " on p.codigo_equipo_visitante = ev.codigo ";
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaConsultar);
-			ResultSet resultados = sentencia.executeQuery(sentenciaConsultar);
+			ResultSet resultados = sentencia.executeQuery();
+			
+			System.out.println(sentenciaConsultar);
+			
 			while (resultados.next()) {
 
 				int codigoLocal = resultados.getInt("codigoLocal");
@@ -332,7 +330,7 @@ public class AccesoPartido {
 				equipoLocal = new Equipo(codigoLocal,nombreLocal,añoFundacionLocal,lugarSedeLocal,estadioLocal,sociosAficionadosLocal);
 				equipoVisitante = new Equipo(codigoVisitante,nombreVisitante,añoFundacionVisitante,lugarSedeVisitante,estadioVisitante,sociosAficionadosVisitante);
 				partido = new Partido(equipoLocal, equipoVisitante, año_temporada, fecha, puntuacion_local, puntuacion_visitante);
-				 partidos.add(partido);
+				partidos.add(partido);
 			}
 			resultados.close();
 			sentencia.close();
@@ -349,7 +347,7 @@ public class AccesoPartido {
 	
 	public static boolean importarPartidos(String path) {
 		BufferedReader flujoEntrada = null;
-		//List<Partido> partidos = new ArrayList<Partido>();
+		
 		try {
 			File fichero = new File(path);
 			flujoEntrada = new BufferedReader(new FileReader(fichero));
@@ -388,10 +386,11 @@ public class AccesoPartido {
 	
 	public static boolean exportarPartidos(String path) {
 		BufferedWriter flujoSalida = null;
-		List<Partido> partidos = new ArrayList<Partido>();
+		List<Partido> partidos = consultarTodosPartidos() ;
 		try {
 			FileWriter escritor = new FileWriter(path, false);
-			flujoSalida = new BufferedWriter(new FileWriter(path, false));
+			flujoSalida = new BufferedWriter(escritor);
+			
 			for (int i = 0; i < partidos.size(); i++) {
 
 				flujoSalida.write(partidos.get(i).toStringWithSeparators());
