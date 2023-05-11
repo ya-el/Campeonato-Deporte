@@ -200,6 +200,7 @@ public class AccesoJugadorEquipo {
 			bw = new BufferedWriter(new FileWriter(PATH, false));
 			
 			List<JugadorEquipo> listaJE = consultarTodo();
+			
 			for (JugadorEquipo je: listaJE) {
 				bw.write(je.toStringWithSeparators());
 				bw.newLine();

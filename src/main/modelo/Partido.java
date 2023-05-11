@@ -43,6 +43,7 @@ public class Partido {
 		this.equipoLocal =  AccesoEquipo.consultar(codigoEquipoLocal);
 		int codigoEquipoVisitante = Integer.parseInt(datos[1]);
 		this.equipoVisitante =  AccesoEquipo.consultar(codigoEquipoLocal);
+		//el importar se rompe aqui
 		this.añoTemporada = Integer.parseInt(datos[2]);
 		this.fecha = datos[3];
 		this.puntuacionLocal = Integer.parseInt(datos[5]);
@@ -56,7 +57,7 @@ public class Partido {
 
 	@Override
 	public String toString() {
-		return "Partido [codigoEquipoLocal=" + equipoLocal.getCodigo() + ", codigoEquipoVisitante=" + equipoVisitante.getCodigo()
+		return "\nPartido [codigoEquipoLocal=" + equipoLocal.getCodigo() + ", codigoEquipoVisitante=" + equipoVisitante.getCodigo()
 				+ ", añoTemporada=" + añoTemporada + ", fecha=" + fecha + ", puntuacionLocal=" + puntuacionLocal
 				+ ", puntuacionVisitante=" + puntuacionVisitante + "]";
 	}
