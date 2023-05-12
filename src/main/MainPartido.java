@@ -132,8 +132,7 @@ public class MainPartido {
 				break;
 				
 			case 6:
-				String pathExportar = Teclado.leerCadena("Direccion donde quiere guardar el archivo: ");
-				boolean escrito = AccesoPartido.exportarPartidos(pathExportar);
+				boolean escrito = AccesoPartido.exportarPartidos();
 				if(escrito) {
 					System.out.println("Se ha exportado la tabla al fichero.");
 				}else {
@@ -142,8 +141,8 @@ public class MainPartido {
 				break;
 				
 			case 7:
-				String pathImportar = Teclado.leerCadena("Direccion del archivo a importar: ");
-				boolean importados = AccesoPartido.importarPartidos(pathImportar);
+				
+				boolean importados = AccesoPartido.importarPartidos();
 				
 				if(!importados) {
 					System.out.println("No se han importado Partidoes del fichero de texto.");

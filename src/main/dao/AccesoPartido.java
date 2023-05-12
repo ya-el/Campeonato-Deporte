@@ -87,12 +87,12 @@ public class AccesoPartido {
 		
 			String sentenciaInsertar = 
 					"UPDATE partido "
-					+ "SET fecha = ? , "
-					+ "SET puntuacion_local = ?, "
-					+ "SET puntuacion_visitante = ?, "
-					+ "WHERE codigo_equipo_local = ?, "
-					+ "and codigo_equipo_visitante = ?, "
-					+ "and año_temporada = ?,";
+					+ "SET fecha = ?  "
+					+ ", puntuacion_local = ? "
+					+ ", puntuacion_visitante = ? "
+					+ "WHERE codigo_equipo_local = ?"
+					+ "and codigo_equipo_visitante = ? "
+					+ "and año_temporada = ?";
 			
 			
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaInsertar);
@@ -143,9 +143,9 @@ public class AccesoPartido {
 			
 			String sentenciaInsertar = 
 					"DELETE FROM partido "
-					+ "WHERE codigo_equipo_local = ?, "
-					+ "and codigo_equipo_visitante = ?, "
-					+ "and año_temporada = ?,";
+					+ "WHERE codigo_equipo_local = ? "
+					+ "and codigo_equipo_visitante = ? "
+					+ "and año_temporada = ?;";
 					
 			
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaInsertar);
@@ -345,11 +345,11 @@ public class AccesoPartido {
 		return  partidos;
 	}
 	
-	public static boolean importarPartidos(String path) {
+	public static boolean importarPartidos() {
 		BufferedReader flujoEntrada = null;
 		
 		try {
-			File fichero = new File(path);
+			File fichero = new File("partido.txt");
 			flujoEntrada = new BufferedReader(new FileReader(fichero));
 
 			String linea = flujoEntrada.readLine();
@@ -384,11 +384,11 @@ public class AccesoPartido {
 		return false;
 	}
 	
-	public static boolean exportarPartidos(String path) {
+	public static boolean exportarPartidos() {
 		BufferedWriter flujoSalida = null;
 		List<Partido> partidos = consultarTodosPartidos() ;
 		try {
-			FileWriter escritor = new FileWriter(path, false);
+			FileWriter escritor = new FileWriter("partido.txt", false);
 			flujoSalida = new BufferedWriter(escritor);
 			
 			for (int i = 0; i < partidos.size(); i++) {
@@ -414,47 +414,6 @@ public class AccesoPartido {
 		return false;
 	}
 	
-	public static boolean rollback() {
-		Connection conexion = null;
-		try {
-			Class.forName("org.sqlite.JDBC");
-			conexion = ConfigBD.abrirConexion();
-			System.out.println("Conectado");
-			
-			String sentenciaRollback = "ROLLBACK;";
-					
-			System.out.println(sentenciaRollback);
-			PreparedStatement sentencia = conexion.prepareStatement(sentenciaRollback);
-			
-			int filasInsertadas = sentencia.executeUpdate();
-			if (filasInsertadas == 0) {
-				System.out.println("Error.");
-				return false;
-			} else {
-				System.out.println("RollBack exitoso");
-				return true;
-			}
-		}
-
-		catch (ClassNotFoundException cnfe) {
-			System.out.println("Error al cargar el conector de SQLite: " + cnfe.getMessage());
-			cnfe.printStackTrace();
-		} catch (SQLException sqle) {
-			System.out.println("Error de SQL: " + sqle.getMessage());
-			sqle.printStackTrace();
-		} finally {
-			try {
-				if (conexion != null) {
-					conexion.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("Error al cerrar la base de datos: " + sqle.getMessage());
-				sqle.printStackTrace();
-			}
-		}
-		return false;
-		
-	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
