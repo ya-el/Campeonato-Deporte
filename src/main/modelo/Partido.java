@@ -61,7 +61,12 @@ public class Partido {
 				+ ", añoTemporada=" + añoTemporada + ", fecha=" + fecha + ", puntuacionLocal=" + puntuacionLocal
 				+ ", puntuacionVisitante=" + puntuacionVisitante + "]";
 	}
-
+	
+	public String toStringMultitabla() {
+		return "\nPartido [codigoEquipoLocal=" + equipoLocal.toString() + ", codigoEquipoVisitante=" + equipoVisitante.toString()
+				+ ", añoTemporada=" + añoTemporada + ", fecha=" + fecha + ", puntuacionLocal=" + puntuacionLocal
+				+ ", puntuacionVisitante=" + puntuacionVisitante + "]";
+	}
 
 	public Equipo getEquipoLocal() {
 		return equipoLocal;

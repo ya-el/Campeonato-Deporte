@@ -105,14 +105,14 @@ public class MainPartido {
 				
 			case 4:
 				
-				int codigoEquipoLocalConultar = Teclado.leerEntero("Codigo equipo local: ");
-				int codigoEquipoVisitanteConultar = Teclado.leerEntero("Codigo equipo visitante: ");
-				int añoTemporadaConultar = Teclado.leerEntero("Año Temporada: ");
-				Equipo equipoLocalConultar = new Equipo(codigoEquipoLocalConultar);
-				Equipo equipoVisitanteConultar = new Equipo(codigoEquipoVisitanteConultar);
+				int codigoEquipoLocalConsultar = Teclado.leerEntero("Codigo equipo local: ");
+				int codigoEquipoVisitanteConsultar = Teclado.leerEntero("Codigo equipo visitante: ");
+				int añoTemporadaConsultar = Teclado.leerEntero("Año Temporada: ");
+				Equipo equipoLocalConsultar = new Equipo(codigoEquipoLocalConsultar);
+				Equipo equipoVisitanteConsultar = new Equipo(codigoEquipoVisitanteConsultar);
 				
-				Partido partidoConultar = new Partido(equipoLocalConultar, equipoVisitanteConultar, añoTemporadaConultar);
-				Partido Partido3 = AccesoPartido.consultarPartido(partidoConultar);
+				Partido partidoConsultar = new Partido(equipoLocalConsultar, equipoVisitanteConsultar, añoTemporadaConsultar);
+				Partido Partido3 = AccesoPartido.consultarPartido(partidoConsultar);
 				
 				if(Partido3 == null) {
 					System.out.println("No existe un Partido con ese codigo en la base de datos.");
@@ -122,11 +122,11 @@ public class MainPartido {
 				break;
 				
 			case 5:
-				List<Partido> Partidos = AccesoPartido.consultarTodosPartidos();
-				if(Partidos == null) {
+				List<Partido> partidos = AccesoPartido.consultarTodosPartidos();
+				if(partidos == null) {
 					System.out.println("No hay Partidoes en la base de datos.");
 				}else {
-					System.out.println(Partidos);
+					System.out.println(partidos);
 				}
 				
 				break;
@@ -150,9 +150,27 @@ public class MainPartido {
 					System.out.println(importados);
 				}
 				break;
+			
+			case 8:
+				List<Partido> partidosMultitabla = AccesoPartido.consultarTodosPartidos();
+				if(partidosMultitabla == null) {
+					System.out.println("No hay Partidoes en la base de datos.");
+				}else {
+					System.out.println(((Partido) partidosMultitabla).toStringMultitabla());
+				}
+				
+				break;
+			
+			case 9:
+			
+				break;
+			
+			case 10:
+				
+				break;
 				
 			default:
-				System.out.println("La opcion debe estar comprendida entre 0 y 7.");
+				System.out.println("La opcion debe estar comprendida entre 0 y 10.");
 			
 			}
 		} while (opcion != 0);
