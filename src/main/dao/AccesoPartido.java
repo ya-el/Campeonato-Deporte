@@ -87,12 +87,12 @@ public class AccesoPartido {
 		
 			String sentenciaInsertar = 
 					"UPDATE partido "
-					+ "SET fecha = ? , "
-					+ "SET puntuacion_local = ?, "
-					+ "SET puntuacion_visitante = ?, "
-					+ "WHERE codigo_equipo_local = ?, "
-					+ "and codigo_equipo_visitante = ?, "
-					+ "and año_temporada = ?,";
+					+ "SET fecha = ?  "
+					+ ", puntuacion_local = ? "
+					+ ", puntuacion_visitante = ? "
+					+ "WHERE codigo_equipo_local = ?"
+					+ "and codigo_equipo_visitante = ? "
+					+ "and año_temporada = ?";
 			
 			
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaInsertar);
@@ -143,9 +143,9 @@ public class AccesoPartido {
 			
 			String sentenciaInsertar = 
 					"DELETE FROM partido "
-					+ "WHERE codigo_equipo_local = ?, "
-					+ "and codigo_equipo_visitante = ?, "
-					+ "and año_temporada = ?,";
+					+ "WHERE codigo_equipo_local = ? "
+					+ "and codigo_equipo_visitante = ? "
+					+ "and año_temporada = ?;";
 					
 			
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaInsertar);

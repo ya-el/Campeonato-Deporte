@@ -42,11 +42,11 @@ public class Partido {
 		int codigoEquipoLocal = Integer.parseInt(datos[0]);
 		this.equipoLocal =  AccesoEquipo.consultar(codigoEquipoLocal);
 		int codigoEquipoVisitante = Integer.parseInt(datos[1]);
-		this.equipoVisitante =  AccesoEquipo.consultar(codigoEquipoLocal);
+		this.equipoVisitante =  AccesoEquipo.consultar(codigoEquipoVisitante);
 		//el importar se rompe aqui
 		this.añoTemporada = Integer.parseInt(datos[2]);
 		this.fecha = datos[3];
-		this.puntuacionLocal = Integer.parseInt(datos[5]);
+		this.puntuacionLocal = Integer.parseInt(datos[4]);
 		this.puntuacionVisitante = Integer.parseInt(datos[5]);
 	}
 	
