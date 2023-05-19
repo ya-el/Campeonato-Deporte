@@ -32,6 +32,14 @@ public class Equipo {
 */
 
 
+	public Equipo(int codigo, String nombre) {
+		super();
+		this.codigo = codigo;
+		this.nombre = nombre;
+	}
+
+
+
 	public Equipo(String nombre, int añoFundacion, String lugarSede, String estadio, int sociosAficionados) {
 		this.nombre = nombre;
 		this.añoFundacion = añoFundacion;
