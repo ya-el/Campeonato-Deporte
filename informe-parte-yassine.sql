@@ -62,11 +62,18 @@ and puntuacion_local = puntuacion_visitante
 --Solicitará al usuario un equipo y sacará el número de jugadores que ha tenido en cada temporada,
 --ordenados por temporada.ugadores que ha tenido en cada temporada,
 --ordenados por temporada.
-SELECT e.nombre, count(j.nombre)
+
+SELECT e.nombre, j.nombre, count(j.nombre)
 from equipo e join jugador_equipo je
 on e.codigo = je.codigo_equipo
 join jugador j
 on j.codigo = je.codigo_jugador
-where e.codigo = 2
-and ;
-
+--join partido p
+--on p.codigo_equipo_local = e.codigo
+--where e.codigo = 2
+group by e.nombre,  j.nombre;
+--and ;
+delete from jugador_equipo
+where codigo_equipo = 11;
+delete from equipo
+where codigo = 11;
