@@ -33,14 +33,14 @@ public class AccesoPartido {
 			Class.forName("org.sqlite.JDBC");
 			conexion = ConfigBD.abrirConexion();
 			System.out.println("Conectado");
-			String sentenciaInsertar = "INSERT INTO partido (codigo_equipo_local, codigo_equipo_visitante, a�o_temporada, fecha, puntuacion_local, puntuacion_visitante) "
+			String sentenciaInsertar = "INSERT INTO partido (codigo_equipo_local, codigo_equipo_visitante, año_temporada, fecha, puntuacion_local, puntuacion_visitante) "
 					+ "VALUES (?,?,?,?,?,?)";
 
 			
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaInsertar);
 			sentencia.setInt(1, partido.getEquipoLocal().getCodigo());
 			sentencia.setInt(2, partido.getEquipoVisitante().getCodigo());
-			sentencia.setDouble(3, partido.getA�oTemporada());
+			sentencia.setDouble(3, partido.getAñoTemporada());
 			sentencia.setString(4, partido.getFecha());
 			sentencia.setInt(5, partido.getPuntuacionLocal());
 			sentencia.setInt(6, partido.getPuntuacionVisitante());
@@ -93,13 +93,13 @@ public class AccesoPartido {
 					+ ", puntuacion_visitante = ? "
 					+ "WHERE codigo_equipo_local = ?"
 					+ "and codigo_equipo_visitante = ? "
-					+ "and a�o_temporada = ?";
+					+ "and año_temporada = ?";
 			
 			
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaInsertar);
 			sentencia.setInt(4, partido.getEquipoLocal().getCodigo());
 			sentencia.setInt(5, partido.getEquipoVisitante().getCodigo());
-			sentencia.setDouble(6, partido.getA�oTemporada());
+			sentencia.setDouble(6, partido.getAñoTemporada());
 			sentencia.setString(1, partido.getFecha());
 			sentencia.setInt(2, partido.getPuntuacionLocal());
 			sentencia.setInt(3, partido.getPuntuacionVisitante());
@@ -146,13 +146,13 @@ public class AccesoPartido {
 					"DELETE FROM partido "
 					+ "WHERE codigo_equipo_local = ? "
 					+ "and codigo_equipo_visitante = ? "
-					+ "and a�o_temporada = ?;";
+					+ "and año_temporada = ?;";
 					
 			
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaInsertar);
 			sentencia.setInt(1, partidoEliminar.getEquipoLocal().getCodigo());
 			sentencia.setInt(2, partidoEliminar.getEquipoVisitante().getCodigo());
-			sentencia.setDouble(3, partidoEliminar.getA�oTemporada());
+			sentencia.setDouble(3, partidoEliminar.getAñoTemporada());
 			
 			System.out.println(sentenciaInsertar);
 			
@@ -196,18 +196,18 @@ public class AccesoPartido {
 			String sentenciaConsultar = 
 					"SELECT  el.codigo as codigoLocal, \n"
 					+ "el.nombre as nombreLocal, \n"
-					+ "el.a�o_fundacion as a�oFundacionLocal, \n"
+					+ "el.año_fundacion as añoFundacionLocal, \n"
 					+ "el.lugar_sede as lugarSedeLocal, \n"
 					+ "el.estadio as estadioLocal, \n"
 					+ "el.socios_aficionados as sociosAficionadosLocal,  \n"
 					+ "\n"
 					+ "ev.codigo as codigoVisitante, \n"
 					+ "ev.nombre as nombreVisitante, \n"
-					+ "ev.a�o_fundacion as a�oFundacionVisitante, \n"
+					+ "ev.año_fundacion as añoFundacionVisitante, \n"
 					+ "ev.lugar_sede as lugarSedeVisitante, \n"
 					+ "ev.estadio as estadioVisitante, \n"
 					+ "ev.socios_aficionados as sociosAficionadosVisitante,  \n"
-					+ "p.a�o_temporada,  \n"
+					+ "p.año_temporada,  \n"
 					+ "p.fecha,  \n"
 					+ "p.puntuacion_local,  \n"
 					+ "p.puntuacion_visitante  \n"
@@ -217,11 +217,11 @@ public class AccesoPartido {
 					+ "on p.codigo_equipo_visitante = ev.codigo \n"
 					+ "WHERE p.codigo_equipo_local = ?   \n"
 					+ "and p.codigo_equipo_visitante = ? \n"
-					+ "and p.a�o_temporada = ?;";
+					+ "and p.año_temporada = ?;";
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaConsultar);
 			sentencia.setInt(1, partidoEntrada.getEquipoLocal().getCodigo());
 			sentencia.setInt(2, partidoEntrada.getEquipoVisitante().getCodigo());
-			sentencia.setDouble(3, partidoEntrada.getA�oTemporada());
+			sentencia.setDouble(3, partidoEntrada.getAñoTemporada());
 			ResultSet resultados = sentencia.executeQuery();
 			
 			System.out.println(sentenciaConsultar);
@@ -229,20 +229,20 @@ public class AccesoPartido {
 				
 				int codigoLocal = resultados.getInt("codigoLocal");
 				String nombreLocal = resultados.getString("nombreLocal");
-				int a�oFundacionLocal = resultados.getInt("a�oFundacionLocal");
+				int añoFundacionLocal = resultados.getInt("añoFundacionLocal");
 				String lugarSedeLocal = resultados.getString("lugarSedeLocal");
 				String estadioLocal = resultados.getString("estadioLocal");
 				int sociosAficionadosLocal = resultados.getInt("sociosAficionadosLocal");
 				
 				int codigoVisitante = resultados.getInt("codigoVisitante");
 				String nombreVisitante = resultados.getString("nombreVisitante");
-				int a�oFundacionVisitante = resultados.getInt("a�oFundacionVisitante");
+				int añoFundacionVisitante = resultados.getInt("añoFundacionVisitante");
 				String lugarSedeVisitante = resultados.getString("lugarSedeVisitante");
 				String estadioVisitante = resultados.getString("estadioVisitante");
 				int sociosAficionadosVisitante = resultados.getInt("sociosAficionadosVisitante");
 				
 				
-				int a�o_temporada = resultados.getInt("a�o_temporada");
+				int año_temporada = resultados.getInt("año_temporada");
 				String fecha = resultados.getString("fecha"); 
 				int puntuacion_local = resultados.getInt("puntuacion_local"); 
 				int puntuacion_visitante = resultados.getInt("puntuacion_visitante");
@@ -251,9 +251,9 @@ public class AccesoPartido {
 				
 
 				
-				equipoLocal = new Equipo(codigoLocal,nombreLocal,a�oFundacionLocal,lugarSedeLocal,estadioLocal,sociosAficionadosLocal);
-				equipoVisitante = new Equipo(codigoVisitante,nombreVisitante,a�oFundacionVisitante,lugarSedeVisitante,estadioVisitante,sociosAficionadosVisitante);
-				partido = new Partido(equipoLocal, equipoVisitante, a�o_temporada, fecha, puntuacion_local, puntuacion_visitante);
+				equipoLocal = new Equipo(codigoLocal,nombreLocal,añoFundacionLocal,lugarSedeLocal,estadioLocal,sociosAficionadosLocal);
+				equipoVisitante = new Equipo(codigoVisitante,nombreVisitante,añoFundacionVisitante,lugarSedeVisitante,estadioVisitante,sociosAficionadosVisitante);
+				partido = new Partido(equipoLocal, equipoVisitante, año_temporada, fecha, puntuacion_local, puntuacion_visitante);
 			}
 			resultados.close();
 			sentencia.close();
@@ -278,18 +278,18 @@ public class AccesoPartido {
 			conexion = ConfigBD.abrirConexion();
 			String sentenciaConsultar =  "SELECT  el.codigo as codigoLocal, \n"
 					 + " el.nombre as nombreLocal, \n"
-					 + " el.a�o_fundacion as a�oFundacionLocal, \n"
+					 + " el.año_fundacion as añoFundacionLocal, \n"
 					 + " el.lugar_sede as lugarSedeLocal, \n"
 					 + " el.estadio as estadioLocal, \n"
 					 + " el.socios_aficionados as sociosAficionadosLocal,  \n"
 					 + " \n"
 					 + " ev.codigo as codigoVisitante, \n"
 					 + " ev.nombre as nombreVisitante, \n"
-					 + " ev.a�o_fundacion as a�oFundacionVisitante, \n"
+					 + " ev.año_fundacion as añoFundacionVisitante, \n"
 					 + " ev.lugar_sede as lugarSedeVisitante, \n"
 					 + " ev.estadio as estadioVisitante, \n"
 					 + " ev.socios_aficionados as sociosAficionadosVisitante,  \n"
-					 + " p.a�o_temporada,  \n"
+					 + " p.año_temporada,  \n"
 					 + " p.fecha,  \n"
 					 + " p.puntuacion_local,  \n"
 					 + " p.puntuacion_visitante  \n"
@@ -306,20 +306,20 @@ public class AccesoPartido {
 
 				int codigoLocal = resultados.getInt("codigoLocal");
 				String nombreLocal = resultados.getString("nombreLocal");
-				int a�oFundacionLocal = resultados.getInt("a�oFundacionLocal");
+				int añoFundacionLocal = resultados.getInt("añoFundacionLocal");
 				String lugarSedeLocal = resultados.getString("lugarSedeLocal");
 				String estadioLocal = resultados.getString("estadioLocal");
 				int sociosAficionadosLocal = resultados.getInt("sociosAficionadosLocal");
 				
 				int codigoVisitante = resultados.getInt("codigoVisitante");
 				String nombreVisitante = resultados.getString("nombreVisitante");
-				int a�oFundacionVisitante = resultados.getInt("a�oFundacionVisitante");
+				int añoFundacionVisitante = resultados.getInt("añoFundacionVisitante");
 				String lugarSedeVisitante = resultados.getString("lugarSedeVisitante");
 				String estadioVisitante = resultados.getString("estadioVisitante");
 				int sociosAficionadosVisitante = resultados.getInt("sociosAficionadosVisitante");
 				
 				
-				int a�o_temporada = resultados.getInt("a�o_temporada");
+				int año_temporada = resultados.getInt("año_temporada");
 				String fecha = resultados.getString("fecha"); 
 				int puntuacion_local = resultados.getInt("puntuacion_local"); 
 				int puntuacion_visitante = resultados.getInt("puntuacion_visitante");
@@ -328,9 +328,9 @@ public class AccesoPartido {
 				
 
 				
-				equipoLocal = new Equipo(codigoLocal,nombreLocal,a�oFundacionLocal,lugarSedeLocal,estadioLocal,sociosAficionadosLocal);
-				equipoVisitante = new Equipo(codigoVisitante,nombreVisitante,a�oFundacionVisitante,lugarSedeVisitante,estadioVisitante,sociosAficionadosVisitante);
-				partido = new Partido(equipoLocal, equipoVisitante, a�o_temporada, fecha, puntuacion_local, puntuacion_visitante);
+				equipoLocal = new Equipo(codigoLocal,nombreLocal,añoFundacionLocal,lugarSedeLocal,estadioLocal,sociosAficionadosLocal);
+				equipoVisitante = new Equipo(codigoVisitante,nombreVisitante,añoFundacionVisitante,lugarSedeVisitante,estadioVisitante,sociosAficionadosVisitante);
+				partido = new Partido(equipoLocal, equipoVisitante, año_temporada, fecha, puntuacion_local, puntuacion_visitante);
 				partidos.add(partido);
 			}
 			resultados.close();
@@ -415,7 +415,7 @@ public class AccesoPartido {
 		return false;
 	}
 	
-	public static Map<> consultarEstadisticas (Equipo equipoConsultar) {
+	public static EquipoEstadistica consultarEstadisticas (Equipo equipoConsultar, int anyoTemporada) {
 		Equipo equipo= null;
 		EquipoEstadistica estadistica = null;
 		Connection conexion = null;
@@ -427,30 +427,30 @@ public class AccesoPartido {
 		try {
 			conexion = ConfigBD.abrirConexion();
 			String sentenciaConsultar = 
-					"select codigo, equipo1, sum(ganados)as ganados\n"
-		
-					+ "from (\n"
-					+ "select e.codigo, e.nombre as equipo1, count(puntuacion_visitante) as ganados\n"
-					+ "FROM equipo e join partido p\n"
-					+ "on e.codigo = p.codigo_equipo_visitante\n"
-					+ "where e.codigo = 2\n"
-					+ "and puntuacion_visitante > puntuacion_local\n"
-					
-					+ "UNION all\n"
-					+ "\n"
-					
-					+ "select e.codigo as codigo, e.nombre as equipo1, count(puntuacion_local) as ganados\n"
-					+ "FROM equipo e join partido p\n"
-					+ "on e.codigo = p.codigo_equipo_local\n"
-					+ "where e.codigo = ?\n"
-					+ "and puntuacion_local > puntuacion_visitante\n"
-					+ ");";
+					"select codigo, equipo1, año_temporada, sum(ganados)as ganados\r\n"
+					+ "from (\r\n"
+					+ "select e.codigo, e.nombre as equipo1, p.año_temporada, count(puntuacion_visitante) as ganados\r\n"
+					+ "FROM equipo e join partido p\r\n"
+					+ "on e.codigo = p.codigo_equipo_visitante\r\n"
+					+ "where e.codigo = ?\r\n"
+					+ "and puntuacion_visitante > puntuacion_local\r\n"
+					+ "and p.año_temporada = ?\r\n"
+					+ "UNION all\r\n"
+					+ "select e.codigo as codigo, e.nombre as equipo1, p.año_temporada, count(puntuacion_local) as ganados\r\n"
+					+ "FROM equipo e join partido p\r\n"
+					+ "on e.codigo = p.codigo_equipo_local\r\n"
+					+ "where e.codigo = ?\r\n"
+					+ "and p.año_temporada = ?\r\n"
+					+ "and puntuacion_local > puntuacion_visitante);";
 			
 			PreparedStatement sentencia = conexion.prepareStatement(sentenciaConsultar);
 			sentencia.setInt(1, equipoConsultar.getCodigo());
+			sentencia.setInt(2, anyoTemporada);
+			sentencia.setInt(3, equipoConsultar.getCodigo());
+			sentencia.setInt(4, anyoTemporada);
 			ResultSet resultados = sentencia.executeQuery();
 			
-			System.out.println(sentenciaConsultar);
+			//System.out.println(sentenciaConsultar);
 			while (resultados.next()) {
 				
 				int codigo = resultados.getInt("codigo");
@@ -458,37 +458,38 @@ public class AccesoPartido {
 				ganados = resultados.getInt("ganados");
 								
 				equipo= new Equipo(codigo,nombre);
-				//partido = new Partido(equipoLocal, equipoVisitante, a�o_temporada, fecha, puntuacion_local, puntuacion_visitante);
+				//partido = new Partido(equipoLocal, equipoVisitante, año_temporada, fecha, puntuacion_local, puntuacion_visitante);
 			}
 			resultados.close();
 			sentencia.close();
 			
 			conexion2 = ConfigBD.abrirConexion();
 			String sentencia2Consulta2 = 
-					"select codigo, equipo1, sum(perdidos)as perdidos\n"
-					+ "from (\n"
-					+ "\n"
-					+ "\n"
-					+ "\n"
-					+ "select e.codigo as codigo, e.nombre as equipo1, count(puntuacion_local) as perdidos\n"
-					+ "FROM equipo e join partido p\n"
-					+ "on e.codigo = p.codigo_equipo_visitante\n"
-					+ "where e.codigo = 2\n"
-					+ "and puntuacion_local > puntuacion_visitante\n"
-					+ "UNION all\n"
-					+ "\n"
-					+ "select e.codigo as codigo, e.nombre as equipo1, count(puntuacion_visitante) as perdidos\n"
-					+ "FROM equipo e join partido p\n"
-					+ "on e.codigo = p.codigo_equipo_local\n"
-					+ "where e.codigo = 2\n"
-					+ "and puntuacion_local < puntuacion_visitante\n"
+					"select codigo, equipo1, año_temporada, sum(perdidos)as perdidos\r\n"
+					+ "from (\r\n"
+					+ "select e.codigo as codigo, e.nombre as equipo1, p.año_temporada, count(puntuacion_local) as perdidos\r\n"
+					+ "FROM equipo e join partido p\r\n"
+					+ "on e.codigo = p.codigo_equipo_visitante\r\n"
+					+ "where e.codigo = ?\r\n"
+					+ "and puntuacion_local > puntuacion_visitante\r\n"
+					+ "and p.año_temporada = ?\r\n"
+					+ "UNION all\r\n"
+					+ "select e.codigo as codigo, e.nombre as equipo1, p.año_temporada, count(puntuacion_visitante) as perdidos\r\n"
+					+ "FROM equipo e join partido p\r\n"
+					+ "on e.codigo = p.codigo_equipo_local\r\n"
+					+ "where e.codigo = ?\r\n"
+					+ "and puntuacion_local < puntuacion_visitante\r\n"
+					+ "and p.año_temporada = ?\r\n"
 					+ ");";
 
 			PreparedStatement sentencia2 = conexion2.prepareStatement(sentencia2Consulta2);
 			sentencia2.setInt(1, equipoConsultar.getCodigo());
+			sentencia2.setInt(2, anyoTemporada);
+			sentencia2.setInt(3, equipoConsultar.getCodigo());
+			sentencia2.setInt(4, anyoTemporada);
 			ResultSet resultados2 = sentencia2.executeQuery();
 
-			System.out.println(sentencia2Consulta2);
+			//System.out.println(sentencia2Consulta2);
 			while (resultados2.next()) {
 				
 				int codigo = resultados2.getInt("codigo");
@@ -496,36 +497,38 @@ public class AccesoPartido {
 				perdidos = resultados2.getInt("perdidos");
 								
 				equipo= new Equipo(codigo,nombre);
-				//partido = new Partido(equipoLocal, equipoVisitante, a�o_temporada, fecha, puntuacion_local, puntuacion_visitante);
+				//partido = new Partido(equipoLocal, equipoVisitante, año_temporada, fecha, puntuacion_local, puntuacion_visitante);
 			}
 			resultados2.close();
 			sentencia2.close();
 			
 			conexion3 = ConfigBD.abrirConexion();
 			String sentencia3Consulta3 = 
-					"select codigo, equipo1, sum(empate)as empate\n"
-					+ "from (\n"
-					+ "select e.codigo as codigo, e.nombre as equipo1, count(puntuacion_visitante) as empate\n"
-					+ "FROM equipo e join partido p\n"
-					+ "on e.codigo = p.codigo_equipo_local\n"
-					+ "where e.codigo = 2\n"
-					+ "and puntuacion_local = puntuacion_visitante\n"
-					+ "\n"
-					+ "UNION all\n"
-					+ "\n"
-					+ "select e.codigo as codigo, e.nombre as equipo1, count(puntuacion_local) as empate\n"
-					+ "FROM equipo e join partido p\n"
-					+ "on e.codigo = p.codigo_equipo_visitante\n"
-					+ "where e.codigo = 2\n"
-					+ "and puntuacion_local = puntuacion_visitante\n"
-					+ "\n"
+					"select codigo, equipo1, año_temporada, sum(empate)as empate\r\n"
+					+ "from (\r\n"
+					+ "select e.codigo as codigo, e.nombre as equipo1, p.año_temporada, count(puntuacion_visitante) as empate\r\n"
+					+ "FROM equipo e join partido p\r\n"
+					+ "on e.codigo = p.codigo_equipo_local\r\n"
+					+ "where e.codigo = ?\r\n"
+					+ "and puntuacion_local = puntuacion_visitante\r\n"
+					+ "and p.año_temporada = ?\r\n"
+					+ "UNION all\r\n"
+					+ "select e.codigo as codigo, e.nombre as equipo1, p.año_temporada, count(puntuacion_local) as empate\r\n"
+					+ "FROM equipo e join partido p\r\n"
+					+ "on e.codigo = p.codigo_equipo_visitante\r\n"
+					+ "where e.codigo = ?\r\n"
+					+ "and puntuacion_local = puntuacion_visitante\r\n"
+					+ "and p.año_temporada = ?\r\n"
 					+ ");";
 
 			PreparedStatement sentencia3 = conexion3.prepareStatement(sentencia3Consulta3);
 			sentencia3.setInt(1, equipoConsultar.getCodigo());
+			sentencia3.setInt(2, anyoTemporada);
+			sentencia3.setInt(3, equipoConsultar.getCodigo());
+			sentencia3.setInt(4, anyoTemporada);
 			ResultSet resultados3 = sentencia3.executeQuery();
 
-			System.out.println(sentencia3Consulta3);
+			//System.out.println(sentencia3Consulta3);
 			while (resultados3.next()) {
 				
 				int codigo = resultados3.getInt("codigo");
@@ -533,7 +536,7 @@ public class AccesoPartido {
 				empatados = resultados3.getInt("empate");
 								
 				equipo= new Equipo(codigo,nombre);
-				//partido = new Partido(equipoLocal, equipoVisitante, a�o_temporada, fecha, puntuacion_local, puntuacion_visitante);
+				//partido = new Partido(equipoLocal, equipoVisitante, año_temporada, fecha, puntuacion_local, puntuacion_visitante);
 			}
 			resultados3.close();
 			sentencia3.close();
@@ -548,7 +551,7 @@ public class AccesoPartido {
 				ConfigBD.cerrarConexion(conexion);
 			}
 		}
-		return equipo;
+		return estadistica;
 		
 	}
 
